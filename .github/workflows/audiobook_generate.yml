@@ -1,0 +1,33 @@
+name: Generate Audiobook MP3s
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "audio-*"
+
+jobs:
+  audiobook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Generate audiobook
+      run: |
+        python scripts/audiobook_generate.py
+
+    - name: Upload audio files
+      uses: actions/upload-artifact@v3
+      with:
+        name: GhostPAT_Audiobook
+        path: book_01_GhostPAT/audiobook/*.mp3
