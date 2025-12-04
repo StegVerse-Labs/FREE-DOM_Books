@@ -1,0 +1,63 @@
+Ch13 — More Than Noise
+
+You can tell a lot about a system by what it calls “noise.”
+
+The official dashboards loved aggregates.
+Call volume, average handle time, issue categories, resolution codes.
+Each veteran flattened into a line on a bar chart.
+
+“Top call driver: missing benefit payment.”
+
+Top.
+Like it won a contest.
+
+I kept hearing that phrase in meetings.
+To management, it was a metric.
+To me, it was a symptom.
+
+One afternoon, I sat in a windowless conference room while a supervisor clicked through a PowerPoint like it was a bedtime story.
+
+“We’re seeing a consistent pattern of delayed and missing payments,” he said, as if I didn’t listen to those patterns cry through a headset every day. “But our systems show everything is functioning normally. It’s just backlog.”
+
+Just backlog.
+
+You learn to hear the word just as a warning label.
+
+I watched the screen.
+Slide after slide of pie charts and arrows pointing vaguely in the direction of “improvement,” as if arrows alone could fix anything.
+
+Someone asked if the recent DOJ arrests were related.
+
+He froze for half a second — just long enough for my pattern-seeking brain to flag it.
+
+“Those were isolated incidents,” he said. “We’re cooperating fully. Let’s stay focused on our scope of control.”
+
+Our scope of control.
+
+I wanted to ask what, exactly, that scope included.
+If it covered the part where veterans went hungry.
+If it included the part where machines drifted off the domain and took evidence with them.
+
+Instead, I took notes in my own language:
+	•	“Top call driver” = ongoing failure
+	•	“Isolated incident” = pattern we don’t want to name
+	•	“Scope of control” = what we’re willing to admit
+
+After the meeting, I stayed behind and stared at the empty chairs.
+Conference rooms are graveyards of unasked questions.
+
+On my notepad, I drew a small diagram:
+	•	Call center
+	•	Payment system
+	•	Credential system
+	•	Network/domain control
+
+I drew arrows between them.
+Every arrow was a potential ghost path.
+
+It hit me then:
+
+This isn’t a series of glitches.
+This is a system that cannot see itself clearly.
+
+And if it can’t see itself, it can’t protect anyone.
