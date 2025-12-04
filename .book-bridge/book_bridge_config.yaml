@@ -1,0 +1,30 @@
+project:
+  name: "FREE-DOM Books"
+  goal: "Turn factual datasets into novelized narrative books."
+  style: "High-emotion, tense, investigative, morally reflective."
+  voice_reference: "Rigel – raw, introspective, cinematic pace."
+
+model:
+  provider: openai
+  engine: gpt-4.1   # leave as is; fallback auto-handled
+  temperature: 0.65
+
+paths:
+  seeds: "seeds/2025"
+  drafts: "drafts"
+  chapters: "chapters"
+  sessions: "sessions"
+
+integration:
+  fact_repo: "StegVerse/FREE-DOM"      # 🔗 link to factual data repo
+  auto_fetch_facts: true
+  restrict_to_verified: true
+
+features:
+  enable_outline_generation: true
+  enable_chapter_continuation: true
+  enable_character_perspective_shift: true
+
+security:
+  require_approval_before_publish: true
+  log_all_generations: true
