@@ -1,0 +1,41 @@
+name: Chapter Diff Report
+
+on:
+  push:
+    paths:
+      - "book_01_GhostPAT/manuscript/ch*.md"
+
+jobs:
+  chapter_diff:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
+
+    - name: Generate diffs for changed chapters
+      run: |
+        mkdir -p book_01_GhostPAT/diffs
+
+        # List changed chapter files between last two commits
+        CHANGED=$(git diff --name-only HEAD^ HEAD -- "book_01_GhostPAT/manuscript/ch*.md" || true)
+
+        if [ -z "$CHANGED" ]; then
+          echo "No chapter changes detected."
+          exit 0
+        fi
+
+        for f in $CHANGED; do
+          base=$(basename "$f")
+          out="book_01_GhostPAT/diffs/${base}.diff.txt"
+          echo "## Diff for $base" > "$out"
+          echo "" >> "$out"
+          git diff HEAD^ HEAD -- "$f" >> "$out" || true
+        done
+
+    - name: Upload chapter diffs
+      uses: actions/upload-artifact@v3
+      with:
+        name: GhostPAT_Chapter_Diffs
+        path: book_01_GhostPAT/diffs/*.diff.txt
