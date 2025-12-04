@@ -1,6 +1,4 @@
-import os
 import sys
-import openai
 from pathlib import Path
 from openai import OpenAI
 
@@ -31,16 +29,14 @@ Maintain tone: investigative, emotionally grounded, evidence-aware.
 
     resp = client.chat.completions.create(
         model="gpt-4.1-mini",
-        messages=[{"role":"user","content":final_prompt}],
+        messages=[{"role": "user", "content": final_prompt}],
         max_tokens=4000,
-        temperature=0.6
+        temperature=0.6,
     )
 
     text = resp.choices[0].message.content
-
     outpath = Path("output/first_chapter.md")
     outpath.write_text(text)
-
     print("\n\n✔ Output saved to output/first_chapter.md\n")
 
 if __name__ == "__main__":
