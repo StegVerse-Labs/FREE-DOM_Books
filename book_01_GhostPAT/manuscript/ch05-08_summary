@@ -1,0 +1,319 @@
+Chapter 4 — The Day I Started Counting
+
+The day I started counting, nothing dramatic happened.
+
+No alarms.
+No sirens.
+No “stop everything, something is wrong” memo.
+
+Just another desktop that wouldn’t log in.
+
+Same beige wall.
+Same humming lights.
+Same smell of burned coffee and frozen air conditioning.
+
+The user had already tried three times before I got there.
+Name, password, enter.
+Name, password, enter.
+
+Each attempt was like watching someone knock on the front door of their own house and get told, calmly, that no one by that name lived there.
+
+“Did you change anything?” I asked.
+
+He shook his head. “Same as always.”
+
+I plugged in my admin keyboard, went through the motions.
+
+Domain unreachable.
+Credential rejected.
+Local login disabled by policy.
+
+The machine might as well have been a cinder block with a screen.
+
+Tier 1 would’ve opened a ticket.
+Tier 2 would’ve escalated it.
+Tier 3 would’ve told them to reimage the machine and move on.
+
+I knew the script by heart.
+
+But that day, when I walked back to my little corner of the office, something about it felt heavier. Not because it was unique — because it wasn’t.
+
+The spreadsheet on my screen was still open from the last time I’d tried to make sense of it all.
+
+Just a simple document at first:
+	•	Date
+	•	Machine name
+	•	Serial number
+	•	Location
+	•	“Fell off domain” — Y/N
+
+The list was longer than it should’ve been.
+
+I added another line.
+
+There’s a moment when a list stops being “a few examples” and turns into evidence. You never know it when it happens. You only recognize it later, looking back at the first row you shouldn’t have shrugged off.
+
+I scrolled up to the top.
+
+Three months.
+
+Ten to fifteen machines a week.
+
+Some had been old hardware, sure. But others had been new — straight from imaging, fresh Windows 10 deployments, clean credentialing, pristine PIV badge integration.
+
+They shouldn’t have failed.
+Not that way.
+Not that fast.
+
+I highlighted three in a row from the same floor.
+Same subnet.
+Different users, different roles.
+
+The odds of them all just… randomly drifting out of time the same week felt wrong.
+
+I printed the sheet.
+
+It came out warm, smelling faintly of toner and denial.
+
+⸻
+
+“Got a minute?” I asked my supervisor.
+
+He was mid-email, fingers hovering over the keyboard. The kind of hover that says, I’m busy, but I’ll pretend I’m not if this doesn’t take long.
+
+“What’s up?” he said.
+
+I handed him the paper.
+
+“These are all the machines that fell off the domain in the last three months,” I said. “At least the ones I’ve seen personally. There are probably more.”
+
+He scanned it, nodding once or twice, the way people do when they’re looking at something they don’t plan to keep looking at for long.
+
+“Uh-huh.”
+
+“They’re not random,” I said. “Look at the dates. And locations. This cluster here— Temple called last week about the same symptoms. We’re seeing it here and there at Waco, and it’s the same pattern.”
+
+“Pattern how?” He put the sheet down like it was a flyer for a charity 5K.
+
+“Fresh builds. Recent reimages. Systems that should have clean time and credentials. They work for a bit, then—boom, gone. No local login, no AD auth, no audit. We just wipe them and pretend nothing happened.”
+
+“That’s the policy,” he said. “We don’t have time to dig into every one.”
+
+“I’m not asking to dig into every one. I’m saying there’s a consistent failure mode here, and if we don’t understand it, we’re going to keep erasing whatever it’s trying to tell us.”
+
+He sighed. Not annoyed yet — just tired. The way people get when they’ve already decided the scope of their concern for the week.
+
+“Rigel,” he said, “we’ve talked about this. Time skew happens. AD buckets get messy. Security tightened up the login rules. This is just the new normal. We reimage and move on.”
+
+“Time skew doesn’t explain brand-new machines falling off within days,” I said. “And it definitely doesn’t explain why it started showing up in Temple right after you transferred.”
+
+That came out sharper than I intended.
+
+He frowned. “You’re not suggesting—”
+
+“I’m not suggesting anything.” I held up my hands. “I’m saying… if machines are losing their place in the trust chain this often, maybe the problem isn’t the machines.”
+
+He leaned back in his chair and rubbed his forehead like he felt a smaller version of the migraines I’d started to collect like merit badges.
+
+“You’re good at seeing patterns,” he said. “But not every pattern means there’s a conspiracy behind it. Sometimes the system is just… clunky.”
+
+Clunky.
+
+Like a vending machine that eats two bucks every now and then.
+
+Not like a payment system for disabled veterans that just forgets to pay them for months.
+
+“Do you remember that guy from last month?” I asked. “The one who called three times about missing deposits? I checked his workstation — it was one of the ones that got dropped. You can’t tell me that’s just coincidence.”
+
+“That’s not our lane,” he said. “Payments, disbursements, call center scripts — that’s VBA. We’re IT. We keep the machines running.”
+
+“That’s the thing,” I said quietly. “We’re not.”
+
+He looked at me for a long second.
+Not angry, not kind — just calculating.
+
+“I appreciate the initiative,” he said finally. “I do. But you can’t carry all of this on your shoulders. Log the machines. Follow the process. If there’s something bigger going on, it’s not going to be solved at your desk.”
+
+I wanted to say, Maybe that’s the problem.
+
+Instead, I nodded and took the paper back. He’d already stopped looking at it.
+
+⸻
+
+Back at my station, I pinned the printout to the corkboard behind my monitor.
+
+It was a small act of rebellion.
+A physical log in a world that preferred things that could be quietly deleted.
+
+One of my coworkers rolled his chair over, soda in hand, eyes on the board.
+
+“New art?” he asked.
+
+“Just tracking domain drops,” I said.
+
+He whistled. “That many?”
+
+“That I know of,” I said. “There’s probably more we never hear about. The ones that go straight to reimage without landing on my radar.”
+
+He took a sip.
+
+“You really think it’s that serious?” he asked. “I mean, yeah, it’s a pain in the ass when they fall off, but… they’re just boxes.”
+
+“Boxes people use to access the systems that decide whether they eat,” I said.
+
+He shrugged, more defensive than cruel. “I get it, man. I do. But if you stare at this stuff too hard, it’ll eat you alive. Clock’s ticking, tickets keep coming. If they want root cause, they’ll fund a project.”
+
+I almost asked him who “they” were.
+I’d never met them.
+
+“Does it bother you?” I asked instead. “When you see a case where someone’s clearly getting screwed and the system just… shrugs?”
+
+He stared at his soda can for a second.
+
+“Every day,” he said. “But my badge doesn’t come with a cape. I’ve got my own bills. My own kids. I do what I can, then I go home.”
+
+He rolled back to his desk before I could answer.
+
+I sat there, staring at the spreadsheet on the board, and felt a quiet kind of anger settle in. Not at him. Not even at my supervisor.
+
+At the shape of the system itself.
+
+The way responsibility dissolved as it moved up the chain.
+Everyone doing “their part,” nobody owning the whole.
+
+That’s how ghosts are made —
+not out of malice, but out of gaps.
+
+⸻
+
+A week later, I got pulled into a meeting with someone from security.
+Conference room. Frosted glass. No windows.
+
+They closed the door behind me. Never a good sign.
+
+“We’ve noticed your machine tracking,” she said, sliding into the chair opposite me. “And your notes on login anomalies.”
+
+Her expression wasn’t hostile. Just neutral. Evaluating.
+
+“Okay,” I said. “Is that a problem?”
+
+“It depends,” she said. “Why are you doing it?”
+
+Because no one else was.
+Because the call logs didn’t show what I saw.
+Because I didn’t know how to stand in front of veterans on the phone and pretend I hadn’t noticed the pattern.
+
+“I’m trying to understand why so many machines are falling off the domain,” I said. “So we can maybe stop it from happening.”
+
+“That’s not a documented project,” she said. “There’s no ticket for this. No tasking. You’ve been doing this… independently.”
+
+The way she said “independently” made it sound like I’d been building bombs in the basement.
+
+“I’m not changing anything,” I said. “Just observing.”
+
+“Sometimes observation is enough to cause issues,” she said. “If your notes are taken out of context. If someone misinterprets them. We have to think about optics when it comes to system stability.”
+
+Optics.
+
+I thought about the man on the phone, three months without payment, eviction notice in hand. I wondered what the optics of that looked like on some report.
+
+“What kind of issues?” I asked.
+
+She folded her hands.
+
+“People might get the impression you’re suggesting internal wrongdoing,” she said carefully. “Or systemic negligence. Those are serious allegations.”
+
+“I’m not suggesting anything,” I said, feeling my throat tighten. “I’m looking at numbers. Machines. Dates. If a pattern is there, it’s there whether I write it down or not.”
+
+“Be that as it may,” she said, “we’d prefer if any such concerns go through official channels. Talk to your supervisor. Let management handle the big picture.”
+
+I almost laughed.
+
+“I did,” I said. “He told me to reimage and move on.”
+
+For the first time, her face softened, just a crack.
+
+“Look,” she said. “I’m not telling you to stop caring. I’m saying — be careful how you document things. These systems are… politically sensitive. No one wants unnecessary attention.”
+
+Unnecessary attention.
+
+Like sunlight on mold.
+
+“Is there an appropriate way to document obvious failure patterns?” I asked. “Somewhere they won’t be quietly deleted when they’re inconvenient?”
+
+She didn’t answer that.
+Instead, she slid a printed policy across the table.
+
+“Read this,” she said. “And maybe… take down the board.”
+
+⸻
+
+That night, I didn’t sleep.
+
+I lay there listening to the house creak and the air conditioner cycle and my own thoughts trying to spin themselves into something survivable.
+
+By the time the sun hinted at the blinds, I knew two things:
+	1.	I was not going to stop counting.
+	2.	I needed a way to count that didn’t depend on anyone else’s willingness to see.
+
+The next day, I took the printout off the corkboard.
+
+Not because they told me to.
+Because I’d realized something scarier:
+
+If the only evidence lived where they could erase it, it wasn’t evidence. It was decoration.
+
+I took it home instead.
+
+Pinned it above my desk where my personal laptop sat — the machine where I’d started sketching half-formed ideas about trust, tokens, and what a system would look like if it refused to forget the people it served.
+
+Back then, it didn’t have a name.
+It was just a feeling.
+
+An architecture made of anger and math.
+
+A belief that if you built a system where every access, every token, every shift of trust had to be accounted for — really accounted for — you could starve some kinds of ghosts before they were born.
+
+Years later, when Ghost_PAT surfaced and tried to slip through my fingers, it wasn’t just a glitch in a pipeline.
+
+It was a message from all those unlogged machines and unanswered calls.
+
+A reminder:
+
+This is what happens when you let systems declare themselves innocent without proof.
+
+Sitting there in Waco, holding a policy document that told me to be careful what I wrote, I didn’t yet know what StegVerse would become.
+
+But I knew this much:
+
+If the world was built on ledgers that didn’t show where the pain went, I was going to spend the rest of my life trying to write a different kind of ledger.
+
+One that remembered.
+
+Even when the people in charge preferred it didn’t.
+
+  /StegVerse/
+   /ideas/
+   /notes/
+   /ledger/
+
+I didn’t know what it would become.
+Just that it had to exist — somewhere outside a place where files vanish when budgets tighten or managers rotate.
+
+In ledger/ I created the first file:
+
+PHANTOM_TRUST.md
+
+Inside, I wrote:
+
+One day, we will build a system that remembers.
+One that logs truth instead of losing it.
+One that survives ghosts by refusing to forget them.
+
+I didn’t realize it then, but that was the first line of StegVerse.
+
+Not the code.
+Not the patents.
+Not the architecture diagrams drawn on backs of envelopes.
+
+A sentence in the dark.
