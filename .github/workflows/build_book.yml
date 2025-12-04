@@ -3,28 +3,51 @@ name: Build Book 01 Manuscript
 on:
   push:
     paths:
-      - "book_01_GhostPAT/manuscript/**"
-  workflow_dispatch:
+      - "book_01_GhostPAT/manuscript/**"         # A: build when chapters or summaries change
+  workflow_dispatch:                             # manual run
+  push:
+    tags:                                         # B: tag-based publishing
+      - "v*"                                      # e.g. v0.1, v1.0, v1.0-release
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install pandoc
-      run: sudo apt-get install -y pandoc
+    - name: Install tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive
 
-    - name: Compile Markdown Book
+    - name: Compile Markdown -> Full Manuscript.md
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
           -o ../../compiled/book_01_GhostPAT_full.md \
-          --standalone \
-          --toc
+          --standalone --toc --toc-depth=3
 
-    - name: Upload Artifact
+    - name: Export PDF
+      working-directory: ./book_01_GhostPAT/manuscript
+      run: |
+        pandoc book_01_master.md \
+          -o ../../compiled/book_01_GhostPAT.pdf \
+          --pdf-engine=xelatex \
+          --highlight-style tango
+
+    - name: Export EPUB
+      working-directory: ./book_01_GhostPAT/manuscript
+      run: |
+        pandoc book_01_master.md \
+          -o ../../compiled/book_01_GhostPAT.epub \
+          --toc --metadata title="GhostPAT"
+
+    - name: Upload Artifact Files
       uses: actions/upload-artifact@v3
       with:
-        name: Book_01_GhostPAT
-        path: compiled/book_01_GhostPAT_full.md
+        name: GhostPAT_Build_Output
+        path: |
+          compiled/book_01_GhostPAT_full.md
+          compiled/book_01_GhostPAT.pdf
+          compiled/book_01_GhostPAT.epub
