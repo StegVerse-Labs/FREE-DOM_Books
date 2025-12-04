@@ -1,24 +1,38 @@
-name: Book Draft Generator
+name: generate-book
 
 on:
   workflow_dispatch:
     inputs:
-      seed:
-        description: "Path to seed file"
-        required: true
+      prompt:
+        description: "Book prompt"
+        required: false
+        default: "Generate first chapter using all seed files."
 
 jobs:
-  generate:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Install Python deps
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
         run: |
-          pip install openai>=1.0.0 pyyaml
+          pip install -r requirements.txt
 
       - name: Run book generator
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          python scripts/book_agent.py ${{ github.event.inputs.seed }}
+          mkdir -p output
+          python scripts/book_agent.py "${{ github.event.inputs.prompt }}"
+          
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-output
+          path: output/
