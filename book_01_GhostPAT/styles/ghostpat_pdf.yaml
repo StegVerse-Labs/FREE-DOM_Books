@@ -1,0 +1,11 @@
+pdf-engine: xelatex
+mainfont: "Liberation Serif"
+fontsize: 12pt
+geometry:
+  - margin=1in
+header-includes:
+  - \setlength{\parskip}{0.75em}
+  - \setlength{\parindent}{0pt}
+  - \linespread{1.25}
+toc: true
+toc-depth: 3
