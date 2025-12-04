@@ -1,0 +1,24 @@
+name: Book Draft Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: "Path to seed file"
+        required: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python + deps
+        run: |
+          pip install openai pyyaml
+
+      - name: Run book generator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/book_agent.py ${{ github.event.inputs.seed }}
