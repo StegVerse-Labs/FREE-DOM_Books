@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "book_01_GhostPAT/manuscript/**"
+      - "book_01_GhostPAT/styles/**"
   workflow_dispatch:
   push:
     tags:
@@ -14,14 +15,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install tools
       run: |
         sudo apt-get update
         sudo apt-get install -y pandoc texlive
 
-    - name: Ensure compiled + docs directories
+    - name: Prepare output directories
       run: |
         mkdir -p book_01_GhostPAT/compiled
         mkdir -p docs
@@ -31,7 +32,9 @@ jobs:
       run: |
         pandoc book_01_master.md \
           -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT_full.md \
-          --standalone --toc --toc-depth=3
+          --standalone \
+          --toc \
+          --toc-depth=3
 
     - name: Export styled PDF
       working-directory: ./book_01_GhostPAT/manuscript
@@ -49,21 +52,26 @@ jobs:
           --css=../styles/ghostpat_epub.css \
           --metadata title="GhostPAT"
 
-    - name: Build HTML for beta site
+    - name: Build beta reader HTML (docs/index.html)
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
           -o ../../docs/index.html \
           --standalone \
           --toc \
-          --metadata title="GhostPAT — Beta Reader Edition"
+          --metadata title="GhostPAT — Beta Reader Draft" \
+          -c beta.css
 
-    - name: Upload Artifact Files
-      uses: actions/upload-artifact@v3
+    - name: Copy beta CSS
+      run: |
+        mkdir -p docs
+        cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css || true
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
       with:
-        name: GhostPAT_Build_Output
+        name: GhostPAT_Book_Build
         path: |
-          book_01_GhostPAT/compiled/book_01_GhostPAT_full.md
-          book_01_GhostPAT/compiled/book_01_GhostPAT.pdf
-          book_01_GhostPAT/compiled/book_01_GhostPAT.epub
+          book_01_GhostPAT/compiled/*
           docs/index.html
+          docs/beta.css
