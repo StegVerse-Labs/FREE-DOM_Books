@@ -1,52 +1,67 @@
-import os, json, datetime, openai
+import os, datetime, yaml
 from pathlib import Path
+from openai import OpenAI
 
-CONFIG = ".book-bridge/book_bridge_config.yaml"
+CONFIG_PATH = ".book-bridge/book_bridge_config.yaml"
 
 def load_config():
-    import yaml
-    return yaml.safe_load(Path(CONFIG).read_text())
+    return yaml.safe_load(Path(CONFIG_PATH).read_text())
 
 def ask(prompt, model="gpt-4.1"):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    completion = openai.ChatCompletion.create(
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise Exception("OPENAI_API_KEY missing")
+
+    client = OpenAI(api_key=api_key)
+
+    response = client.chat.completions.create(
         model=model,
-        messages=[{"role":"user","content":prompt}]
+        messages=[{"role": "user", "content": prompt}]
     )
-    return completion.choices[0].message.content
+
+    return response.choices[0].message.content
 
 def run(seed_file):
     cfg = load_config()
-    seeds = Path(cfg["paths"]["seeds"])
+
+    seed_path = Path(seed_file)
+    text = seed_path.read_text()
+
     drafts = Path(cfg["paths"]["drafts"])
     sessions = Path(cfg["paths"]["sessions"])
+    drafts.mkdir(exist_ok=True)
+    sessions.mkdir(exist_ok=True)
 
-    text = Path(seed_file).read_text()
     ts = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     session_dir = sessions / f"session_{ts}"
     session_dir.mkdir(parents=True, exist_ok=True)
 
     prompt = f"""
-    You are writing within the FREE-DOM Book universe.
+    You are writing in the FREE-DOM Book narrative universe.
     Tone: {cfg['project']['style']}
     Voice: {cfg['project']['voice_reference']}
 
-    Convert the following seed into a narrative scene,
-    prioritizing emotion, pacing, stakes, and verifiable context.
-    Cite facts where known.
+    Convert the following seed into a narrative scene.
+    Maintain emotional tension and pacing.
+    Cite facts when known & draw connections carefully.
+    Output should read like the first pages of a book.
 
+    ---
     SEED INPUT:
     {text}
     """
 
-    output = ask(prompt)
-    (session_dir / "draft.md").write_text(output)
+    output = ask(prompt, cfg["model"]["engine"])
 
+    (session_dir / "draft.md").write_text(output)
     draft_file = drafts / f"{ts}_draft.md"
     draft_file.write_text(output)
 
-    print("\nDraft generated →", draft_file)
+    print(f"\n📄 Draft generated → {draft_file}\n")
 
 if __name__ == "__main__":
     import sys
-    run(sys.argv[1])
+    if len(sys.argv) < 2:
+        print("Usage: python scripts/book_agent.py seeds/2025/<file>.md")
+    else:
+        run(sys.argv[1])
