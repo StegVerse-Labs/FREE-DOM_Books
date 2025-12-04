@@ -1,0 +1,30 @@
+name: Build Book 01 Manuscript
+
+on:
+  push:
+    paths:
+      - "book_01_GhostPAT/manuscript/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install pandoc
+      run: sudo apt-get install -y pandoc
+
+    - name: Compile Markdown Book
+      working-directory: ./book_01_GhostPAT/manuscript
+      run: |
+        pandoc book_01_master.md \
+          -o ../../compiled/book_01_GhostPAT_full.md \
+          --standalone \
+          --toc
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Book_01_GhostPAT
+        path: compiled/book_01_GhostPAT_full.md
