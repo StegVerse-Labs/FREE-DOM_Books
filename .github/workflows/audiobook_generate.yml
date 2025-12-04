@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4   # Updated from v3 for compatibility
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -22,12 +22,12 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Generate audiobook
+    - name: Generate audiobook MP3 files
       run: |
         python scripts/audiobook_generate.py
 
     - name: Upload audio files
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4   # UPDATED VERSION
       with:
         name: GhostPAT_Audiobook
         path: book_01_GhostPAT/audiobook/*.mp3
