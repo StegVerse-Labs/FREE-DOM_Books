@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Python + deps
+      
+      - name: Install Python deps
         run: |
-          pip install openai pyyaml
+          pip install openai>=1.0.0 pyyaml
 
       - name: Run book generator
         env:
