@@ -3,11 +3,11 @@ name: Build Book 01 Manuscript
 on:
   push:
     paths:
-      - "book_01_GhostPAT/manuscript/**"         # A: build when chapters or summaries change
-  workflow_dispatch:                             # manual run
+      - "book_01_GhostPAT/manuscript/**"
+  workflow_dispatch:
   push:
-    tags:                                         # B: tag-based publishing
-      - "v*"                                      # e.g. v0.1, v1.0, v1.0-release
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -21,33 +21,49 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y pandoc texlive
 
+    - name: Ensure compiled + docs directories
+      run: |
+        mkdir -p book_01_GhostPAT/compiled
+        mkdir -p docs
+
     - name: Compile Markdown -> Full Manuscript.md
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
-          -o ../../compiled/book_01_GhostPAT_full.md \
+          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT_full.md \
           --standalone --toc --toc-depth=3
 
-    - name: Export PDF
+    - name: Export styled PDF
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
-          -o ../../compiled/book_01_GhostPAT.pdf \
-          --pdf-engine=xelatex \
-          --highlight-style tango
+          --defaults=../styles/ghostpat_pdf.yaml \
+          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT.pdf
 
-    - name: Export EPUB
+    - name: Export styled EPUB
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
-          -o ../../compiled/book_01_GhostPAT.epub \
-          --toc --metadata title="GhostPAT"
+          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT.epub \
+          --toc \
+          --css=../styles/ghostpat_epub.css \
+          --metadata title="GhostPAT"
+
+    - name: Build HTML for beta site
+      working-directory: ./book_01_GhostPAT/manuscript
+      run: |
+        pandoc book_01_master.md \
+          -o ../../docs/index.html \
+          --standalone \
+          --toc \
+          --metadata title="GhostPAT — Beta Reader Edition"
 
     - name: Upload Artifact Files
       uses: actions/upload-artifact@v3
       with:
         name: GhostPAT_Build_Output
         path: |
-          compiled/book_01_GhostPAT_full.md
-          compiled/book_01_GhostPAT.pdf
-          compiled/book_01_GhostPAT.epub
+          book_01_GhostPAT/compiled/book_01_GhostPAT_full.md
+          book_01_GhostPAT/compiled/book_01_GhostPAT.pdf
+          book_01_GhostPAT/compiled/book_01_GhostPAT.epub
+          docs/index.html
