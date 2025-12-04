@@ -20,6 +20,25 @@ Rigel is not a detached camera. He feels everything, even when he tries to minim
 
 ---
 
+## 1.5 Cognitive POV — Visual Thinking
+
+Rigel processes stories and events as **3D video** in his mind.
+When someone speaks, he sees rooms, objects, processes, and timelines.
+Systems become landscapes. Tokens become keys. Trust becomes architecture.
+
+When describing events, interior narrative may visualize:
+
+- log files like constellations
+- credentials like spectral fingerprints
+- bureaucratic systems like mazes
+- people speaking like waveform patterns
+
+ADHD contributes to **branching thought streams**, rapid connections,
+moments of hyperfocus clarity, and occasionally overwhelming signal density.
+
+Autism spectrum traits contribute **precision, pattern hunger,
+literal interpretation of systems, and discomfort when logic is violated.**
+
 ## 2. Tone
 
 Default tone: **grounded, human, and precise with flashes of intensity.**
