@@ -5,10 +5,9 @@ on:
     paths:
       - "book_01_GhostPAT/manuscript/**"
       - "book_01_GhostPAT/styles/**"
-  workflow_dispatch:
-  push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
   build:
