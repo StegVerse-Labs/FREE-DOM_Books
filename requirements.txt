@@ -1,2 +1,4 @@
 openai>=1.0.0
 python-dotenv
+gTTS==2.5.1
+tqdm==4.66.5
