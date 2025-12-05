@@ -1,52 +1,44 @@
-name: Build Book 01 Website + Exports
+name: Build & Publish GhostPAT Beta Site
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - "book_01_GhostPAT/manuscript/**"
       - "book_01_GhostPAT/styles/**"
-      - "**.md"
-    tags:
-      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    # avoid infinite loop when github-actions pushes back to main
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: Install tools
+    - name: Install pandoc
       run: |
         sudo apt-get update
-        sudo apt-get install -y pandoc texlive
+        sudo apt-get install -y pandoc
 
-    - name: Create output folders
-      run: |
-        mkdir -p docs
-        mkdir -p book_01_GhostPAT/compiled
-
-    # 📌 Building website version of your book here
-    - name: Build Beta Reader Site (docs/index.html)
+    - name: Build Beta Reader HTML into docs/
       run: |
         mkdir -p docs
         pandoc book_01_GhostPAT/manuscript/book_01_master.md \
           -f markdown -t html5 \
           -s -o docs/index.html \
-          --css book_01_GhostPAT/styles/ghostpat_epub.css
+          --css book_01_GhostPAT/styles/ghostpat_epub.css \
+          --metadata title="GhostPAT — Beta Reader Draft"
 
-    - name: Copy Beta Reader CSS
+    - name: Commit and push docs/index.html
       run: |
-        cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css || true
-
-    # (Optional future steps — PDF/EPUB build can be added back next)
-    # - name: Export PDF / EPUB etc...
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: GhostPAT_SiteBuild
-        path: |
-          docs/index.html
-          docs/beta.css
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add docs/index.html
+        git commit -m "Update beta reader site [skip ci]" || echo "No changes to commit"
+        git push || echo "Nothing to push"
