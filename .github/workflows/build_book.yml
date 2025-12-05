@@ -32,9 +32,13 @@ jobs:
         pandoc book_01_GhostPAT/manuscript/book_01_master.md \
           -f markdown -t html5 \
           -s -o docs/index.html \
-          --css book_01_GhostPAT/styles/ghostpat_epub.css \
+          --css beta.css \
           --metadata title="GhostPAT — Beta Reader Draft"
 
+    - name: Copy beta reader CSS into docs
+      run: |
+        cp book_01_GhostPAT/styles/beta_reader.css docs/beta.css
+        
     - name: Commit and push docs/index.html
       run: |
         git config user.name "github-actions[bot]"
