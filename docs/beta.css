@@ -1,0 +1,32 @@
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  line-height: 1.5;
+  margin: 1em;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+}
+
+p {
+  text-indent: 1.25em;
+  margin-top: 0;
+  margin-bottom: 0.6em;
+}
+
+p + p {
+  text-indent: 1.25em;
+}
+
+hr {
+  margin: 2em auto;
+  width: 30%;
+}
+
+blockquote {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  font-style: italic;
+}
