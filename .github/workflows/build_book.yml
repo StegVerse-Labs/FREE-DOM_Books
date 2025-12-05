@@ -1,48 +1,15 @@
-name: Build & Publish GhostPAT Beta Site
-
-on:
-  push:
-    paths:
-      - "book_01_GhostPAT/manuscript/**"
-      - "book_01_GhostPAT/styles/**"
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  build:
-    # avoid infinite loop when github-actions pushes back to main
-    if: github.actor != 'github-actions[bot]'
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Install pandoc
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y pandoc
-
     - name: Build Beta Reader HTML into docs/
       run: |
         mkdir -p docs
-        pandoc book_01_GhostPAT/manuscript/book_01_master.md \
+        pandoc \
+          book_01_GhostPAT/manuscript/book_01_master.md \
+          book_01_GhostPAT/manuscript/ch*.md \
           -f markdown -t html5 \
           -s -o docs/index.html \
+          --toc \
           --css beta.css \
           --metadata title="GhostPAT — Beta Reader Draft"
 
     - name: Copy beta reader CSS into docs
       run: |
         cp book_01_GhostPAT/styles/beta_reader.css docs/beta.css
-        
-    - name: Commit and push docs/index.html
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add docs/index.html
-        git commit -m "Update beta reader site [skip ci]" || echo "No changes to commit"
-        git push || echo "Nothing to push"
