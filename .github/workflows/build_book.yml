@@ -1,13 +1,14 @@
-name: Build Book 01 Manuscript
+name: Build Book 01 Website + Exports
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "book_01_GhostPAT/manuscript/**"
       - "book_01_GhostPAT/styles/**"
+      - "**.md"
     tags:
       - "v*"
-  workflow_dispatch:
 
 jobs:
   build:
@@ -21,37 +22,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y pandoc texlive
 
-    - name: Prepare output directories
+    - name: Create output folders
       run: |
-        mkdir -p book_01_GhostPAT/compiled
         mkdir -p docs
+        mkdir -p book_01_GhostPAT/compiled
 
-    - name: Compile Markdown -> Full Manuscript.md
-      working-directory: ./book_01_GhostPAT/manuscript
-      run: |
-        pandoc book_01_master.md \
-          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT_full.md \
-          --standalone \
-          --toc \
-          --toc-depth=3
-
-    - name: Export styled PDF
-      working-directory: ./book_01_GhostPAT/manuscript
-      run: |
-        pandoc book_01_master.md \
-          --defaults=../styles/ghostpat_pdf.yaml \
-          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT.pdf
-
-    - name: Export styled EPUB
-      working-directory: ./book_01_GhostPAT/manuscript
-      run: |
-        pandoc book_01_master.md \
-          -o ../../book_01_GhostPAT/compiled/book_01_GhostPAT.epub \
-          --toc \
-          --css=../styles/ghostpat_epub.css \
-          --metadata title="GhostPAT"
-
-    - name: Build beta reader HTML (docs/index.html)
+    # 📌 Building website version of your book here
+    - name: Build Beta Reader Site (docs/index.html)
       working-directory: ./book_01_GhostPAT/manuscript
       run: |
         pandoc book_01_master.md \
@@ -61,16 +38,17 @@ jobs:
           --metadata title="GhostPAT — Beta Reader Draft" \
           -c beta.css
 
-    - name: Copy beta CSS
+    - name: Copy Beta Reader CSS
       run: |
-        mkdir -p docs
         cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css || true
+
+    # (Optional future steps — PDF/EPUB build can be added back next)
+    # - name: Export PDF / EPUB etc...
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: GhostPAT_Book_Build
+        name: GhostPAT_SiteBuild
         path: |
-          book_01_GhostPAT/compiled/*
           docs/index.html
           docs/beta.css
