@@ -1,15 +1,59 @@
-    - name: Build Beta Reader HTML into docs/
-      run: |
-        mkdir -p docs
-        pandoc \
-          book_01_GhostPAT/manuscript/book_01_master.md \
-          book_01_GhostPAT/manuscript/ch*.md \
-          -f markdown -t html5 \
-          -s -o docs/index.html \
-          --toc \
-          --css beta.css \
-          --metadata title="GhostPAT — Beta Reader Draft"
+name: Build Beta Reader Site
 
-    - name: Copy beta reader CSS into docs
-      run: |
-        cp book_01_GhostPAT/styles/beta_reader.css docs/beta.css
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Build beta reader HTML (docs/index.html)
+        run: |
+          mkdir -p docs
+          pandoc \
+            book_01_GhostPAT/manuscript/book_01_master.md \
+            book_01_GhostPAT/manuscript/ch*.md \
+            -f markdown -t html5 \
+            -s -o docs/index.html \
+            --toc \
+            --css beta.css \
+            --metadata title="GhostPAT — Beta Reader Draft"
+
+      - name: Build blog page (docs/blog.html, if blog.md exists)
+        run: |
+          if [ -f blog.md ]; then
+            pandoc blog.md \
+              -f markdown -t html5 \
+              -s -o docs/blog.html \
+              --css beta.css \
+              --metadata title="GhostPAT Blog"
+          else
+            echo "blog.md not found, skipping blog build."
+          fi
+
+      - name: Copy beta CSS
+        run: |
+          mkdir -p docs
+          cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css
+
+      - name: Commit and push updated docs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html docs/beta.css 2>/dev/null || true
+          if [ -f docs/blog.html ]; then
+            git add docs/blog.html
+          fi
+          git commit -m "Update beta reader site [skip ci]" || echo "Nothing to commit"
+          git push || echo "Nothing to push"
