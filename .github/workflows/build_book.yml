@@ -29,14 +29,12 @@ jobs:
 
     # 📌 Building website version of your book here
     - name: Build Beta Reader Site (docs/index.html)
-      working-directory: ./book_01_GhostPAT/manuscript
       run: |
-        pandoc book_01_master.md \
-          -o ../../docs/index.html \
-          --standalone \
-          --toc \
-          --metadata title="GhostPAT — Beta Reader Draft" \
-          -c beta.css
+        mkdir -p docs
+        pandoc book_01_GhostPAT/manuscript/book_01_master.md \
+          -f markdown -t html5 \
+          -s -o docs/index.html \
+          --css book_01_GhostPAT/styles/ghostpat_epub.css
 
     - name: Copy Beta Reader CSS
       run: |
