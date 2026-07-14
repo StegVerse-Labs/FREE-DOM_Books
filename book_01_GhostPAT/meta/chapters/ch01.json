@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "book_id": "book_01_GhostPAT",
+  "chapter_number": "01",
+  "title": "The Night the Key Wouldn't Die",
+  "manuscript_path": "book_01_GhostPAT/manuscript/ch01_The_Key_That_Wouldn’t_Die.md",
+  "canon_status": "FACTUAL_REVIEW_REQUIRED",
+  "chronology": {
+    "era": "GHOST_PAT_FLASH_FORWARD",
+    "not_before": null,
+    "not_after": null,
+    "notes": "Later technical flash-forward; must not extend the VA-era investigation beyond February 2020."
+  },
+  "evidence_classes": [
+    "LIVED_MEMORY",
+    "DOCUMENTED_FACT",
+    "NONCANONICAL_DRAFT"
+  ],
+  "claim_ids": [],
+  "dialogue_ids": [],
+  "composite_ids": [],
+  "source_ids": [],
+  "publication_eligible": false,
+  "review_notes": [
+    "Verify CI logs, endpoint, HTTP status sequence, token lifecycle, and claimed root cause.",
+    "Verify personal setting, migraine details, and exact incident notes before presenting them as factual.",
+    "Preserve Ghost_PAT as a thematic echo rather than proof of VA-era causation."
+  ],
+  "last_reviewed_commit": null
+}
