@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/free-dom-books/chapter_metadata.schema.json",
+  "title": "FREE-DOM Books Chapter Metadata",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "book_id",
+    "chapter_number",
+    "title",
+    "manuscript_path",
+    "canon_status",
+    "chronology",
+    "evidence_classes",
+    "claim_ids",
+    "dialogue_ids",
+    "composite_ids",
+    "publication_eligible"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "book_id": {"const": "book_01_GhostPAT"},
+    "chapter_number": {"type": "string", "pattern": "^[0-9]{2}$"},
+    "title": {"type": "string", "minLength": 1},
+    "manuscript_path": {"type": "string", "pattern": "^book_01_GhostPAT/manuscript/ch[0-9]{2}_.+\\.md$"},
+    "canon_status": {
+      "enum": [
+        "VERIFIED_CANON",
+        "CANON_DRAFT",
+        "FACTUAL_REVIEW_REQUIRED",
+        "COMPOSITE_REVIEW_REQUIRED",
+        "NONCANONICAL_DRAFT",
+        "MISSING_FROM_REPOSITORY",
+        "UNRESOLVED_ORDER"
+      ]
+    },
+    "chronology": {
+      "type": "object",
+      "required": ["era", "not_after"],
+      "properties": {
+        "era": {"enum": ["VA_ERA", "GHOST_PAT_FLASH_FORWARD", "BRIDGE", "OTHER"]},
+        "not_before": {"type": ["string", "null"], "format": "date"},
+        "not_after": {"type": ["string", "null"], "format": "date"},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_classes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "LIVED_MEMORY",
+          "DOCUMENTED_FACT",
+          "PUBLIC_RECORD",
+          "COMPOSITE",
+          "FICTIONAL_CONNECTIVE_TISSUE",
+          "UNVERIFIED_LEAD",
+          "NONCANONICAL_DRAFT"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "claim_ids": {"type": "array", "items": {"type": "string", "pattern": "^GOT-MEM-[0-9]{3}$"}, "uniqueItems": true},
+    "dialogue_ids": {"type": "array", "items": {"type": "string", "pattern": "^GOT-DLG-[0-9]{3}$"}, "uniqueItems": true},
+    "composite_ids": {"type": "array", "items": {"type": "string", "pattern": "^GOT-COMP-[0-9]{3}$"}, "uniqueItems": true},
+    "source_ids": {"type": "array", "items": {"type": "string", "pattern": "^GOT-SRC-[A-Z]{2}-[0-9]{3}$"}, "uniqueItems": true},
+    "publication_eligible": {"type": "boolean"},
+    "review_notes": {"type": "array", "items": {"type": "string"}},
+    "last_reviewed_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"canon_status": {"const": "VERIFIED_CANON"}}},
+      "then": {"properties": {"publication_eligible": {"const": true}}},
+      "else": {"properties": {"publication_eligible": {"const": false}}}
+    },
+    {
+      "if": {"properties": {"chronology": {"properties": {"era": {"const": "VA_ERA"}}}}},
+      "then": {"properties": {"chronology": {"properties": {"not_after": {"const": "2020-02-29"}}}}}
+    }
+  ],
+  "additionalProperties": false
+}
