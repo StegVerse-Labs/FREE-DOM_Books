@@ -22,13 +22,13 @@ Authority: `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`
 
 ## Register
 
-| Chapter | Working title | Current status | Required action |
+| Chapter | Repository path / working title | Current status | Required action |
 |---|---|---|---|
 | Prologue | What Follows You Home | NONCANONICAL_DRAFT | Review I-35 details; remove invented sensory specifics unless remembered or documented. |
-| 01 | The Key That Wouldn't Die | MISSING_FROM_REPOSITORY | Locate or recreate from the approved source draft; verify path and title. |
-| 02 | The First Ghost | NONCANONICAL_DRAFT | Reconcile against lived memory and existing outline. |
-| 03 | Call Center Gravity / alternate title unresolved | UNRESOLVED_ORDER | Resolve title and scene sequence; classify all veteran-call material. |
-| 04 | The Ledger / alternate title unresolved | UNRESOLVED_ORDER | Remove invented meetings, dialogue, and unsupported policy specifics. |
+| 01 | `book_01_GhostPAT/manuscript/ch01_The_Key_That_Wouldn’t_Die.md` — The Night the Key Wouldn’t Die | FACTUAL_REVIEW_REQUIRED | Apply `research/chapter_01_fact_audit.md`; verify logs, routes, root cause, chronology, setting, symptoms, and dialogue. Observed blob SHA: `7886ae194bac2f3d01f6941dead31159d902e6a6`. |
+| 02 | `book_01_GhostPAT/manuscript/ch02_The_First_Ghost.md` — The First Ghost | FACTUAL_REVIEW_REQUIRED | Reconcile VA role, veteran-call exposure, workstation chronology, and all causal implications. Observed blob SHA: `bbdde56482dd33ec6981b66fc814e52c8ce74bf3`. |
+| 03 | `book_01_GhostPAT/manuscript/ch03_The_Call_I_Still_Hear.md` — The Call I Still Hear | COMPOSITE_REVIEW_REQUIRED | Classify caller identity, family details, payment timeline, quoted dialogue, and outcome. Observed blob SHA: `c08f5f9a455fb103ba965bfb05b615c8cc44c45b`. |
+| 04 | The Ledger / alternate title unresolved | UNRESOLVED_ORDER | Verify repository path; remove invented meetings, dialogue, and unsupported policy specifics. |
 | 05 | When the News Broke | FACTUAL_REVIEW_REQUIRED | Verify DOJ event, date, amounts, roles, and what Rigel actually saw or knew at the time. |
 | 06 | The Whisper Network | NONCANONICAL_DRAFT | Treat rumors and credential behavior as unverified until sourced. |
 | 07 | A Conversation I Still Think About | COMPOSITE_REVIEW_REQUIRED | Do not present veteran dialogue as verbatim unless documented. |
@@ -45,6 +45,12 @@ Authority: `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`
 | 18 | Ghosts in the Machine | CANON_DRAFT | Preserve Ghost_PAT flash-forward role; verify technical details against incident records. |
 | 19-25 | Bridge material | NONCANONICAL_DRAFT | Do not extend the lived investigation past February 2020; rebuild only after chronology review. |
 
+## Verified build anchor
+
+`book_01_GhostPAT/manuscript/book_01_master.md` exists with observed blob SHA `9958e4718a7ba0e14f944dc716c0aac89a5196cc`. It lists Chapters 1-18 and is consumed by `.github/workflows/build_book.yml`.
+
+The master file and beta-reader build are **not evidence of canon approval**. They expose drafts for reading and must not override this register.
+
 ## Required provenance records
 
 Before any chapter becomes `VERIFIED_CANON`, create or update:
@@ -53,7 +59,8 @@ Before any chapter becomes `VERIFIED_CANON`, create or update:
 - `book_01_GhostPAT/research/source_reference_map.md`
 - `book_01_GhostPAT/research/composite_character_register.md`
 - `book_01_GhostPAT/research/dialogue_reconstruction_register.md`
+- a chapter-specific factual audit where exact technical, medical, employment, allegation, or survivor details appear
 
 ## Immediate next action
 
-Verify the repository's actual file tree, then update this register with exact paths, commit SHAs, and source classes.
+Continue exact-path verification for Chapters 4-18, then add an automated advisory canon audit that compares manuscript files with this register before beta or publication builds.
