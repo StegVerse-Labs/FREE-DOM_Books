@@ -2,6 +2,12 @@ name: Build Beta Reader Site
 
 on:
   workflow_dispatch:
+    inputs:
+      include_unverified:
+        description: Include chapters not marked VERIFIED_CANON (draft-only build)
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -13,24 +19,67 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install Pandoc
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc
 
-      - name: Build beta reader HTML (docs/index.html)
+      - name: Run canon audit
+        run: python scripts/canon_audit.py
+
+      - name: Build chapter manifest
         run: |
-          mkdir -p docs
+          if [ "${{ inputs.include_unverified }}" = "true" ]; then
+            python scripts/publication_manifest.py --include-unverified
+          else
+            python scripts/publication_manifest.py
+          fi
+
+      - name: Prepare build front matter
+        run: |
+          mkdir -p build docs
+          if [ "${{ inputs.include_unverified }}" = "true" ]; then
+            cat > build/build_frontmatter.md <<'EOF'
+          % GhostPAT — Controlled Draft
+          % Rigel Randolph
+
+          > **DRAFT — NOT FACT-CHECKED OR PUBLICATION-ELIGIBLE**
+          >
+          > This build intentionally includes chapters that remain under factual,
+          > composite-character, dialogue, chronology, or provenance review.
+          > Inclusion in this file does not make a chapter canonical.
+
+          EOF
+          else
+            cat > build/build_frontmatter.md <<'EOF'
+          % GhostPAT — Verified Canon Build
+          % Rigel Randolph
+
+          This build contains only chapters marked `VERIFIED_CANON` in the
+          authoritative chapter status register.
+
+          EOF
+          fi
+
+      - name: Build reader HTML
+        shell: bash
+        run: |
+          mapfile -t CHAPTERS < build/publication_manifest.txt
           pandoc \
-            book_01_GhostPAT/manuscript/book_01_master.md \
-            book_01_GhostPAT/manuscript/ch*.md \
+            build/build_frontmatter.md \
+            "${CHAPTERS[@]}" \
             -f markdown -t html5 \
             -s -o docs/index.html \
             --toc \
             --css beta.css \
-            --metadata title="GhostPAT — Beta Reader Draft"
+            --metadata title="GhostPAT — Reader Build"
 
-      - name: Build blog page (docs/blog.html, if blog.md exists)
+      - name: Build blog page
         run: |
           if [ -f blog.md ]; then
             pandoc blog.md \
@@ -43,17 +92,22 @@ jobs:
           fi
 
       - name: Copy beta CSS
-        run: |
-          mkdir -p docs
-          cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css
+        run: cp book_01_GhostPAT/styles/ghostpat_epub.css docs/beta.css
+
+      - name: Upload canon audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: canon-audit-report
+          path: reports/canon_audit.md
+          if-no-files-found: error
 
       - name: Commit and push updated docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/beta.css 2>/dev/null || true
+          git add docs/index.html docs/beta.css
           if [ -f docs/blog.html ]; then
             git add docs/blog.html
           fi
-          git commit -m "Update beta reader site [skip ci]" || echo "Nothing to commit"
+          git commit -m "Update governed reader site [skip ci]" || echo "Nothing to commit"
           git push || echo "Nothing to push"
