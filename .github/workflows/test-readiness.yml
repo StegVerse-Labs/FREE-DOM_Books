@@ -63,5 +63,18 @@ jobs:
       - name: Run unit tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: Validate chapter metadata
+        run: python scripts/validate_chapter_metadata.py
+
       - name: Run advisory canon audit
         run: python scripts/canon_audit.py
+
+      - name: Upload validation reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: readiness-reports
+          path: |
+            reports/chapter_metadata_validation.md
+            reports/canon_audit.md
+          if-no-files-found: warn
