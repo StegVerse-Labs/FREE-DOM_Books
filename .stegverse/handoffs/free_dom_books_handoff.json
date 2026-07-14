@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "continuation_handoff",
+  "repository": "StegVerse-Labs/FREE-DOM_Books",
+  "status": "active",
+  "scope": [
+    "book_1_canon_reconciliation",
+    "rige1_author_continuity",
+    "evidence_integration",
+    "series_chronology",
+    "workflow_validation"
+  ],
+  "canonical_decisions": {
+    "book_1_investigation_end": "2020-02",
+    "book_2_title": "The Ledger of Silence",
+    "ghost_pat_role": "later_flash_forward_and_origin_echo",
+    "epstein_era_pov_start": "before_2020-02",
+    "youngest_victim_pov_rule": "evidence_constrained_and_may_continue_as_adult_3I_ATLAS_protagonist",
+    "publication_requires_user_approval": true,
+    "unsupported_real_person_allegations_prohibited": true
+  },
+  "required_events": [
+    "i35_side_swipe_by_another_federal_employee_after_work",
+    "immediate_return_to_work_after_collision"
+  ],
+  "authorship_classes": [
+    "LIVED_MEMORY",
+    "DOCUMENTED_FACT",
+    "PUBLIC_RECORD",
+    "COMPOSITE",
+    "FICTIONAL_CONNECTIVE_TISSUE",
+    "UNVERIFIED_LEAD",
+    "NONCANONICAL_DRAFT"
+  ],
+  "expected_existing_paths": [
+    "book_01_GhostPAT/manuscript/ch01_The_Key_That_Wouldn't_Die.md",
+    "book_01_GhostPAT/outline/Book01_outline.md",
+    "book_01_GhostPAT/meta/version_history.md",
+    "prompts/style_seed.md",
+    "prompts/Rige1_brainseed.txt"
+  ],
+  "durable_records": {
+    "human_handoff": "docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md",
+    "chapter_status_register": "book_01_GhostPAT/meta/chapter_status_register.md"
+  },
+  "remaining_tasks": [
+    "verify_repository_state",
+    "reconcile_chapters_2_through_18",
+    "create_memoir_source_provenance_register",
+    "create_survivor_source_boundary",
+    "connect_freedom_evidence_ingestion_and_receipts",
+    "inspect_build_audiobook_and_pages_workflows",
+    "compile_only_publication_eligible_chapters"
+  ],
+  "blockers": [
+    "later_drafts_contain_unsupported_specifics",
+    "canonical_chapter_order_after_chapter_1_unresolved",
+    "survivor_character_evidence_not_mapped",
+    "workflow_failures_or_no_op_runs_unresolved"
+  ],
+  "owner": "active_FREE-DOM_Books_continuation_or_StegVerse_orchestration",
+  "permitted_without_user": [
+    "non_destructive_documentation",
+    "continuity_extraction",
+    "repository_inspection",
+    "issue_and_task_creation",
+    "draft_classification",
+    "evidence_index_scaffolding",
+    "workflow_diagnosis",
+    "reconciliation_proposals"
+  ],
+  "user_required_for": [
+    "factual_corrections_to_lived_events",
+    "sensitive_personal_details",
+    "survivor_protection_decisions",
+    "real_person_identification_choices",
+    "irreversible_publication_or_release"
+  ],
+  "next_action": "verify_expected_paths_and_populate_chapter_status_register"
+}
