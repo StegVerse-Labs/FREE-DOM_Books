@@ -1,0 +1,55 @@
+name: Canon Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: Fail if any manuscript chapter is not VERIFIED_CANON
+        required: false
+        type: boolean
+        default: false
+  push:
+    paths:
+      - "book_01_GhostPAT/manuscript/**"
+      - "book_01_GhostPAT/meta/**"
+      - "book_01_GhostPAT/research/**"
+      - "scripts/canon_audit.py"
+      - ".github/workflows/canon_audit.yml"
+  pull_request:
+    paths:
+      - "book_01_GhostPAT/manuscript/**"
+      - "book_01_GhostPAT/meta/**"
+      - "book_01_GhostPAT/research/**"
+      - "scripts/canon_audit.py"
+      - ".github/workflows/canon_audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run advisory canon audit
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.strict != true }}
+        run: python scripts/canon_audit.py
+
+      - name: Run strict canon audit
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.strict == true }}
+        run: python scripts/canon_audit.py --strict
+
+      - name: Upload canon audit report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: canon-audit-report
+          path: reports/canon_audit.md
+          if-no-files-found: error
