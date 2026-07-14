@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "book_id": "book_01_GhostPAT",
+  "chapter_number": "03",
+  "title": "The Call I Still Hear",
+  "manuscript_path": "book_01_GhostPAT/manuscript/ch03_The_Call_I_Still_Hear.md",
+  "canon_status": "COMPOSITE_REVIEW_REQUIRED",
+  "chronology": {
+    "era": "VA_ERA",
+    "not_before": null,
+    "not_after": "2020-02-29",
+    "notes": "Caller scene requires composite and dialogue classification before canon admission."
+  },
+  "evidence_classes": [
+    "LIVED_MEMORY",
+    "COMPOSITE",
+    "NONCANONICAL_DRAFT"
+  ],
+  "claim_ids": [
+    "GOT-MEM-003"
+  ],
+  "dialogue_ids": [
+    "GOT-DLG-001"
+  ],
+  "composite_ids": [
+    "GOT-COMP-001"
+  ],
+  "source_ids": [
+    "GOT-SRC-LM-001"
+  ],
+  "publication_eligible": false,
+  "review_notes": [
+    "Do not treat caller age, family circumstances, duration, or exact words as verified without source support.",
+    "Preserve the human impact through transparent paraphrase or registered composite construction.",
+    "Assess identifiability and avoid implying a traceable real case."
+  ],
+  "last_reviewed_commit": null
+}
