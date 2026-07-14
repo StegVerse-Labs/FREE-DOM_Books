@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "book_id": "book_01_GhostPAT",
+  "chapter_number": "02",
+  "title": "The First Ghost",
+  "manuscript_path": "book_01_GhostPAT/manuscript/ch02_The_First_Ghost.md",
+  "canon_status": "FACTUAL_REVIEW_REQUIRED",
+  "chronology": {
+    "era": "VA_ERA",
+    "not_before": null,
+    "not_after": "2020-02-29",
+    "notes": "VA-era institutional and workstation observations only."
+  },
+  "evidence_classes": [
+    "LIVED_MEMORY",
+    "NONCANONICAL_DRAFT"
+  ],
+  "claim_ids": [
+    "GOT-MEM-003",
+    "GOT-MEM-005"
+  ],
+  "dialogue_ids": [],
+  "composite_ids": [],
+  "source_ids": [
+    "GOT-SRC-LM-001"
+  ],
+  "publication_eligible": false,
+  "review_notes": [
+    "Verify the scope and frequency of payment-related calls.",
+    "Verify workstation/domain failure descriptions and remove unsupported causation.",
+    "Avoid implying that every caller or machine incident belonged to one unified mechanism."
+  ],
+  "last_reviewed_commit": null
+}
