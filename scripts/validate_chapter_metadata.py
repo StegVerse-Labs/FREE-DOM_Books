@@ -87,9 +87,9 @@ def validate_file(path: Path, manuscript_dir: Path) -> tuple[str, list[str]]:
         expected_prefix = "book_01_GhostPAT/manuscript/ch"
         if not manuscript_path.startswith(expected_prefix) or not manuscript_path.endswith(".md"):
             errors.append("manuscript_path: invalid chapter path")
-        absolute = ROOT / manuscript_path
+        manuscript_file = manuscript_dir / Path(manuscript_path).name
         status = data.get("canon_status")
-        if status != "MISSING_FROM_REPOSITORY" and not absolute.is_file():
+        if status != "MISSING_FROM_REPOSITORY" and not manuscript_file.is_file():
             errors.append(f"manuscript_path: file not found: {manuscript_path}")
         if chapter and Path(manuscript_path).name[:4].lower() != f"ch{chapter}".lower():
             errors.append("manuscript_path: chapter number does not match metadata")
