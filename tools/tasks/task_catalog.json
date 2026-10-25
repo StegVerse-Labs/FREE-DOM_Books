@@ -1,0 +1,156 @@
+{
+ "schema": "stegverse.task-catalog/v1",
+ "repository": "StegVerse-Labs/FREE-DOM_Books",
+ "goal_id": "G17-WORKFLOW-SURFACE-MINIMIZATION",
+ "authority": "Rigel 2026-10-24 retroactive G17 enforcement (StegVerse-org/.github#166); pattern StegVerse-Labs/StegDB#60 (eab2e773)",
+ "dispatcher": ".github/workflows/validation-dispatcher.yml",
+ "runner": "tools/tasks/run_catalog.py",
+ "runner_source": "StegVerse-Labs/StegDB tools/tasks/run_catalog.py @ eab2e773271f3e63466a710f1b4555f677882848 (sha256 f741f30557888fd8e4852a52adfc65736a08898d49ade7519f6bcc2672921e9b), copied unmodified",
+ "rule": "Every check a folded workflow job ran is one group here; its step bodies are the original run blocks byte for byte, pinned by sha256, except the repairs listed. A new check is a new group (or a step in one), never a new workflow file.",
+ "path_filters": "Dropped: every group runs on every pull_request and push to main (a superset of the original path-filtered runs). workflow_dispatch/schedule triggers are not carried (no manual dispatch, no cron).",
+ "repairs": [
+  "canon_audit.audit used path-filtered push/pull_request; as a catalog group it runs on every pull request and push to main. Its strict step is gated to workflow_dispatch with inputs.strict and is not selected by any catalog event, as before for push and pull_request.",
+  "test-readiness.repo-smoke used to run on every push, pull request and dispatch; it now runs on pull requests and pushes to main.",
+  "docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md L78/L80 name the folded record paths (display only)."
+ ],
+ "folded_from_commit": "3758167",
+ "groups": [
+  {
+   "id": "canon_audit.audit",
+   "source": {
+    "workflow": ".github/workflows/canon_audit.yml",
+    "workflow_name": "Canon Audit",
+    "job": "audit",
+    "job_name": null,
+    "commit": "3758167",
+    "triggers_before": [
+     "workflow_dispatch",
+     "push",
+     "pull_request"
+    ],
+    "permissions_before": {
+     "contents": "read"
+    }
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Run advisory canon audit",
+     "run_file": "tools/tasks/steps/canon_audit.audit/01-run-advisory-canon-audit.sh",
+     "run_sha256": "46a20b4c412d46d05692701c79f61d2ff15d6f04ef829556155bf190742712cc",
+     "if": "${{ github.event_name != 'workflow_dispatch' || inputs.strict != true }}"
+    },
+    {
+     "name": "Run strict canon audit",
+     "run_file": "tools/tasks/steps/canon_audit.audit/02-run-strict-canon-audit.sh",
+     "run_sha256": "f5a277e4c39d36fe50f9ff634ab283d0254877544092af5b0072e29592d588a1",
+     "if": "${{ github.event_name == 'workflow_dispatch' && inputs.strict == true }}"
+    }
+   ],
+   "artifacts": [
+    {
+     "name": "canon-audit-report",
+     "path": "reports/canon_audit.md",
+     "if_no_files_found": "error",
+     "if": "always()"
+    }
+   ],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "true",
+    "timeout_minutes": 30,
+    "python_version": "3.12",
+    "artifact_name": "canon-audit-report",
+    "artifact_if_no_files_found": "error"
+   }
+  },
+  {
+   "id": "test-readiness.repo-smoke",
+   "source": {
+    "workflow": ".github/workflows/test-readiness.yml",
+    "workflow_name": "Test Readiness",
+    "job": "repo-smoke",
+    "job_name": null,
+    "commit": "3758167",
+    "triggers_before": [
+     "push",
+     "pull_request",
+     "workflow_dispatch"
+    ],
+    "permissions_before": {
+     "contents": "read"
+    }
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Baseline repository smoke test",
+     "run_file": "tools/tasks/steps/test-readiness.repo-smoke/01-baseline-repository-smoke-test.sh",
+     "run_sha256": "47739f77d525b9d25be6cf766f6380f3b65369d29a253b3521c84f9ccee9fd10"
+    },
+    {
+     "name": "Run unit tests",
+     "run_file": "tools/tasks/steps/test-readiness.repo-smoke/02-run-unit-tests.sh",
+     "run_sha256": "6ce8535acad45f62d80bceaddb29fbe6c5ce20d9670bdf7df8561b41d0f29d6a"
+    },
+    {
+     "name": "Validate chapter metadata",
+     "run_file": "tools/tasks/steps/test-readiness.repo-smoke/03-validate-chapter-metadata.sh",
+     "run_sha256": "8ce31ec00517b578fd4f74548d8c96e06af061af2199c97b25a6575e896eff63"
+    },
+    {
+     "name": "Run advisory canon audit",
+     "run_file": "tools/tasks/steps/test-readiness.repo-smoke/04-run-advisory-canon-audit.sh",
+     "run_sha256": "46a20b4c412d46d05692701c79f61d2ff15d6f04ef829556155bf190742712cc"
+    }
+   ],
+   "artifacts": [
+    {
+     "name": "readiness-reports",
+     "path": "reports/chapter_metadata_validation.md\nreports/canon_audit.md\n",
+     "if_no_files_found": "warn",
+     "if": "always()"
+    }
+   ],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "true",
+    "timeout_minutes": 5,
+    "python_version": "3.12",
+    "artifact_name": "readiness-reports",
+    "artifact_if_no_files_found": "warn"
+   }
+  },
+  {
+   "id": "workflow-surface-registry.validate",
+   "catalog_addition": "G17 registry gate (no folded source workflow)",
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Workflow files equal the registered surfaces; catalog verifies ALLOW",
+     "run_file": "tools/tasks/steps/workflow-surface-registry.validate/01-registry.sh",
+     "run_sha256": "811824e88664923006be2eeb35632d710f5504145967f61632ad9e8fbdcb35ca"
+    }
+   ],
+   "artifacts": [],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "false",
+    "timeout_minutes": 10,
+    "python_version": "3.11"
+   }
+  }
+ ]
+}

@@ -17,6 +17,13 @@ REGISTER = ROOT / "book_01_GhostPAT/meta/chapter_status_register.md"
 MANUSCRIPT = ROOT / "book_01_GhostPAT/manuscript"
 DEFAULT_OUTPUT = ROOT / "build/publication_manifest.txt"
 
+
+def display(path: Path) -> Path:
+    """Repository-relative path when inside the repository, otherwise the path as given."""
+    resolved = path.resolve()
+    return resolved.relative_to(ROOT) if resolved.is_relative_to(ROOT) else path
+
+
 PUBLICATION_ELIGIBLE = {"VERIFIED_CANON"}
 KNOWN_STATUSES = {
     "VERIFIED_CANON",
@@ -92,19 +99,19 @@ def main() -> int:
 
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(
-            "\n".join(path.relative_to(ROOT).as_posix() for path in selected) + "\n",
+            "\n".join(display(path).as_posix() for path in selected) + "\n",
             encoding="utf-8",
         )
 
         print(f"Selected {len(selected)} chapter(s):")
         for path in selected:
             number = chapter_number(path)
-            print(f"  {path.relative_to(ROOT)} [{statuses.get(number or '', 'UNREGISTERED')}]")
+            print(f"  {display(path)} [{statuses.get(number or '', 'UNREGISTERED')}]")
 
         if excluded:
             print("Excluded chapters:")
             for path, status in excluded:
-                print(f"  {path.relative_to(ROOT)} [{status}]")
+                print(f"  {display(path)} [{status}]")
 
         if args.include_unverified:
             print("WARNING: draft mode includes chapters that are not publication eligible.")

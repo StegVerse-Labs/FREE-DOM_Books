@@ -1,0 +1,138 @@
+{
+ "schema": "stegverse.workflow-surface-registry/v1",
+ "goal_id": "G17-WORKFLOW-SURFACE-MINIMIZATION",
+ "repository": "StegVerse-Labs/FREE-DOM_Books",
+ "policy_issue": "StegVerse-Labs/.github#167, #168; StegVerse-org/.github#166",
+ "preferred_repository_workflow_count_max": 2,
+ "exception_repository_workflow_count_max": 3,
+ "credential_authority": "the SKAP Vault inside KV is the only PII and credential store for every user, including the StegVerse ecosystem's own; no secret or token is referenced, introduced or moved by this fold",
+ "invariants": [
+  "Every workflow file is registered in surfaces[]; an unregistered or changed one fails closed (tests/test_workflow_surface_registry.py).",
+  "A new check is a group in tools/tasks/task_catalog.json, never a new workflow file.",
+  "The stable dispatcher carries no workflow_dispatch, schedule, repository_dispatch, issues or workflow_run trigger; a kept surface is pinned by sha256 and unchanged by the fold.",
+  "G17 documented exception: above 2 workflow files, every kept surface other than the dispatcher carries an exception record (lifecycle and technical-necessity justification); the count never exceeds exception_repository_workflow_count_max (3)."
+ ],
+ "unregistered_workflow_outcome": {
+  "disposition": "FAIL_CLOSED",
+  "failure_code": "UNREGISTERED_WORKFLOW_SURFACE",
+  "failed_predicate": "EVERY_WORKFLOW_FILE_IS_REGISTERED",
+  "required_evidence_or_repair": "register the file in control/workflow-surface-registry.json surfaces[] or fold it into tools/tasks/task_catalog.json",
+  "retry_entrypoint": "tests/test_workflow_surface_registry.py",
+  "owning_existing_goal": "G17-WORKFLOW-SURFACE-MINIMIZATION (StegVerse-Labs/.github#167/#168); StegVerse-org/.github#166",
+  "next_attempt": "the next pull request touching .github/workflows/"
+ },
+ "surfaces": [
+  {
+   "path": ".github/workflows/validation-dispatcher.yml",
+   "classification": "KEEP_STABLE_DISPATCHER",
+   "triggers": [
+    "pull_request",
+    "push"
+   ],
+   "permissions": {
+    "contents": "read"
+   }
+  },
+  {
+   "path": ".github/workflows/build_book.yml",
+   "classification": "KEEP_EXISTING_SURFACE_UNCHANGED",
+   "triggers": [
+    "workflow_dispatch"
+   ],
+   "permissions": null,
+   "reason": "KEEP_EXISTING_SURFACE_UNCHANGED (documented exception, writer): workflow_dispatch-only fail-closed publication build (canon audit, publication manifest, pandoc build) committing with contents: write; it is the publication path named by docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md L79/L127 and consumed per book_01_GhostPAT/meta/chapter_status_register.md L50. Technical necessity: the stable dispatcher holds contents: read only, has no workflow_dispatch input surface and cannot carry the write.",
+   "verbatim_sha256": "1828f193f5418b2be3f13ac4f5d3677bd645d1b9728970addaab637d010c6433",
+   "exception": {
+    "lifecycle": "documented publication writer (dispatch-only, contents: write)",
+    "justification": "KEEP_EXISTING_SURFACE_UNCHANGED (documented exception, writer): workflow_dispatch-only fail-closed publication build (canon audit, publication manifest, pandoc build) committing with contents: write; it is the publication path named by docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md L79/L127 and consumed per book_01_GhostPAT/meta/chapter_status_register.md L50. Technical necessity: the stable dispatcher holds contents: read only, has no workflow_dispatch input surface and cannot carry the write.",
+    "within_exception_ceiling": true
+   }
+  },
+  {
+   "path": ".github/workflows/audiobook_generate.yml",
+   "classification": "KEEP_EXISTING_SURFACE_UNCHANGED",
+   "triggers": [
+    "workflow_dispatch",
+    "push"
+   ],
+   "permissions": null,
+   "reason": "KEEP_EXISTING_SURFACE_UNCHANGED (documented exception, release-tag surface): it runs only on push of an audio-* tag (and dispatch), producing the GhostPAT audiobook artifact. Technical necessity: the stable dispatcher triggers only on pull_request and push to main, so a catalog group could never be selected by a tag push; folding would silently remove the tag path.",
+   "verbatim_sha256": "56202a8ccdde893bd491f759a533eb675c8d132e3fec1d73d2e774b5d81998fc",
+   "exception": {
+    "lifecycle": "release-tag artifact surface (push tags audio-*)",
+    "justification": "KEEP_EXISTING_SURFACE_UNCHANGED (documented exception, release-tag surface): it runs only on push of an audio-* tag (and dispatch), producing the GhostPAT audiobook artifact. Technical necessity: the stable dispatcher triggers only on pull_request and push to main, so a catalog group could never be selected by a tag push; folding would silently remove the tag path.",
+    "within_exception_ceiling": true
+   }
+  }
+ ],
+ "folded": [
+  {
+   "workflow": ".github/workflows/book_generate.yml",
+   "name": "generate-book",
+   "triggers_before": [
+    "workflow_dispatch"
+   ],
+   "classification": "ELIMINATE",
+   "status": "DONE",
+   "reason": "Its only trigger is workflow_dispatch and it materializes secrets.OPENAI_API_KEY into a generation run; no pull_request or push trigger could select it from the catalog. Consumer secret materialization is outside the lane (credentials live only in the SKAP Vault inside KV). Kept verbatim as a record under tools/tasks/folded/.",
+   "verbatim_record": "tools/tasks/folded/book_generate.yml",
+   "verbatim_sha256": "9d8bf4d465e6f1cf7cd20947076c59dbf2f3f9cd69a1575357d4a7b13f1cb323"
+  },
+  {
+   "workflow": ".github/workflows/chapter_generate.yml",
+   "name": "Book Chapter Generator",
+   "triggers_before": [
+    "workflow_dispatch"
+   ],
+   "classification": "ELIMINATE",
+   "status": "DONE",
+   "reason": "Its only trigger is workflow_dispatch and it materializes secrets.OPENAI_API_KEY; no pull_request or push trigger could select it. Kept verbatim as a record under tools/tasks/folded/.",
+   "verbatim_record": "tools/tasks/folded/chapter_generate.yml",
+   "verbatim_sha256": "381ea92616df5782b35bfa5d0d240c77a3aad6209de76a099a206fb863299fcd"
+  },
+  {
+   "workflow": ".github/workflows/verify_paths.yml",
+   "name": "Verify Manuscript Paths",
+   "triggers_before": [
+    "workflow_dispatch"
+   ],
+   "classification": "ELIMINATE",
+   "status": "DONE",
+   "reason": "Its only trigger is workflow_dispatch and its only step is `ls -R .`; it carries no check. Kept verbatim as a record under tools/tasks/folded/.",
+   "verbatim_record": "tools/tasks/folded/verify_paths.yml",
+   "verbatim_sha256": "a79ea83c86628815bca0062321302da4aaa9948c0e92eda8d2211953a7c0a17a"
+  },
+  {
+   "workflow": ".github/workflows/canon_audit.yml",
+   "name": "Canon Audit",
+   "triggers_before": [
+    "workflow_dispatch",
+    "push",
+    "pull_request"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "canon_audit.audit"
+   ],
+   "verbatim_record": "tools/tasks/folded/canon_audit.yml",
+   "verbatim_sha256": "52cf68428a01fbab0ae71d349be894024df1527fe57baa2ac446d0539646a356"
+  },
+  {
+   "workflow": ".github/workflows/test-readiness.yml",
+   "name": "Test Readiness",
+   "triggers_before": [
+    "push",
+    "pull_request",
+    "workflow_dispatch"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "test-readiness.repo-smoke"
+   ],
+   "verbatim_record": "tools/tasks/folded/test-readiness.yml",
+   "verbatim_sha256": "512b2fca5146cea947386a034089117465a3b97417f5bc906c1cb2f1938d246b"
+  }
+ ]
+}
