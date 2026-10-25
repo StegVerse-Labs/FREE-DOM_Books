@@ -1,0 +1,1 @@
+python scripts/canon_audit.py --strict

@@ -1,0 +1,1 @@
+python scripts/validate_chapter_metadata.py

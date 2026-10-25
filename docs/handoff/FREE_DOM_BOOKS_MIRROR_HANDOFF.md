@@ -75,9 +75,9 @@ Claims expire or release when their stated task-registry conditions are satisfie
 - `scripts/canon_audit.py`
 - `scripts/publication_manifest.py`
 - `scripts/validate_chapter_metadata.py`
-- `.github/workflows/canon_audit.yml`
+- `tools/tasks/folded/canon_audit.yml`
 - `.github/workflows/build_book.yml`
-- `.github/workflows/test-readiness.yml`
+- `tools/tasks/folded/test-readiness.yml`
 - `tests/test_publication_manifest.py`
 - `tests/test_chapter_metadata.py`
 
