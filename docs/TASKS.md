@@ -4,6 +4,20 @@ Canonical handoff: `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`
 Canonical execution inventory: `docs/SESSION_EXECUTION_INVENTORY.md`
 Canonical issue: `#1`
 
+## Goal binding
+
+- Goal Task ID: `FDB-CANON-001` (this registry's owning goal; verified
+  repo-side in `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`).
+- Sandbox item: `SANDBOX-FREEDOM-BOOKS-REVIEW-01`, `INGRESS_ACCEPTED`
+  2026-11-27 under `ECOSYSTEM_KV_AND_SANDBOX_COMPOSITE_V1`.
+- Org registry: `org_registry_verified: false` — `FDB-CANON-001` is not
+  yet registered in `StegVerse-Labs/.github`
+  `control/organization-task-registry.json`; that registry's live
+  schema (v0.2) carries federation tasks with registrar-minted COSV
+  vectors, so registration is a registrar act, filed as a registrar
+  request in the Ecosystem KV on 2026-11-27. Item 5 of the sandbox
+  queue filing remains gated until it lands.
+
 ## State vocabulary
 
 `UNCLAIMED`, `CLAIMED_FOR_IMPLEMENTATION`, `CLAIMED_FOR_VALIDATION`, `CLAIMED_FOR_INTEGRATION`, `MACHINE_OWNED`, `BLOCKED`, `COMPLETE`, `SUPERSEDED`, `MERGED_INTO_CANONICAL_WORKSTREAM`.
