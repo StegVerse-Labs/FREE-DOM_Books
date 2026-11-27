@@ -13,7 +13,6 @@ Canonical issue: `#1`
 | Task ID | State | Owner | Surface | Release condition | Expected evidence | Next task |
 |---|---|---|---|---|---|---|
 | FDB-007 | CLAIMED_FOR_IMPLEMENTATION | FREE-DOM_Books canonical workstream | Chapters 2-18, metadata, audits | all chapters explicitly classified and mapped to provenance | commits, validator report, canon audit artifact | FDB-005 strict publication gate |
-| FDB-008 | CLAIMED_FOR_IMPLEMENTATION | FREE-DOM_Books canonical workstream | Book 2 survivor-source boundary | boundary file and chronology schema committed | commit and validation report | Book 2 outline only after boundary passes |
 | FDB-009 | CLAIMED_FOR_VALIDATION | FREE-DOM_Books validation lane | `prompts/style_seed.md`, `prompts/Rige1_brainseed.txt`, prompt loader | paths/content verified and loading test passes | test result and workflow artifact | integrate generation workflow |
 | FDB-010 | MACHINE_OWNED | GitHub Actions | readiness, canon audit, governed reader build | qualifying workflow run completes and artifacts are inspectable | run, jobs, logs, artifacts | correct failures or mark COMPLETE |
 | FDB-011 | CLAIMED_FOR_IMPLEMENTATION | FREE-DOM_Books canonical workstream | legacy links in manuscript/public surfaces | all links point to canonical repository or are intentionally retained | commit and link scan | regenerate reader build |
@@ -30,6 +29,7 @@ Canonical issue: `#1`
 | FDB-004 | COMPLETE | dialogue and composite registers |
 | FDB-005 | MACHINE_OWNED | publication manifest, governed build, tests |
 | FDB-006 | COMPLETE | four provenance registers |
+| FDB-008 | COMPLETE | boundary file, chronology schema, validator and validation report committed 2026-11-27 (see `book_02_LedgerOfSilence/boundary/VALIDATION_REPORT.md`); claim `.stegverse/claims/fdb_008_execution_claim.json` |
 | FDB-014 | COMPLETE | inventory, handoff, issue, and claim-release record |
 
 ## Collision boundaries

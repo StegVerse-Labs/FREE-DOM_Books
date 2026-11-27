@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/free-dom-books/evidence_chronology.schema.json",
+  "title": "FREE-DOM Books Book 2 Evidence Chronology Entry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entry_id",
+    "book_id",
+    "title",
+    "event_window",
+    "evidence_classes",
+    "source_refs",
+    "protection_class",
+    "subject_handling",
+    "pov_eligibility",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "book_id": {"const": "book_02_LedgerOfSilence"},
+    "entry_id": {"type": "string", "pattern": "^LOS-CHRON-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 1},
+    "event_window": {
+      "type": "object",
+      "required": ["not_before", "not_after"],
+      "properties": {
+        "not_before": {"type": "string", "format": "date"},
+        "not_after": {"type": "string", "format": "date"},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_classes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "LIVED_MEMORY",
+          "DOCUMENTED_FACT",
+          "PUBLIC_RECORD",
+          "COMPOSITE",
+          "FICTIONAL_CONNECTIVE_TISSUE",
+          "UNVERIFIED_LEAD",
+          "NONCANONICAL_DRAFT"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["repository", "path", "lifecycle"],
+        "properties": {
+          "repository": {"const": "StegVerse-Labs/FREE-DOM"},
+          "path": {"type": "string", "pattern": "^data/(master|pending|unverified|archive)/.+"},
+          "lifecycle": {"enum": ["MASTER_VERIFIED", "PENDING", "UNVERIFIED", "ARCHIVE"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "protection_class": {
+      "enum": ["PUBLIC_ANONYMIZED", "COMPOSITE_REQUIRED", "ESCROW_ONLY", "PROHIBITED"]
+    },
+    "subject_handling": {
+      "type": "object",
+      "required": ["identifying_details", "age_band_at_event", "composite_required"],
+      "properties": {
+        "identifying_details": {"const": "NONE_PRESENT"},
+        "age_band_at_event": {"enum": ["MINOR", "ADULT", "UNKNOWN", "NOT_APPLICABLE"]},
+        "composite_required": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "pov_eligibility": {
+      "enum": ["NOT_ELIGIBLE", "COMPOSITE_POV_ELIGIBLE", "ADULT_CONTINUATION_ELIGIBLE"]
+    },
+    "review": {
+      "type": "object",
+      "required": ["chronology_reviewed", "survivor_protection_reviewed"],
+      "properties": {
+        "chronology_reviewed": {"type": "boolean"},
+        "survivor_protection_reviewed": {"type": "boolean"},
+        "reviewed_by": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"evidence_classes": {"contains": {"const": "UNVERIFIED_LEAD"}}}, "required": ["evidence_classes"]},
+      "then": {"properties": {"pov_eligibility": {"const": "NOT_ELIGIBLE"}}}
+    },
+    {
+      "if": {"properties": {"protection_class": {"enum": ["ESCROW_ONLY", "PROHIBITED"]}}, "required": ["protection_class"]},
+      "then": {"properties": {"pov_eligibility": {"const": "NOT_ELIGIBLE"}}}
+    },
+    {
+      "if": {"properties": {"pov_eligibility": {"const": "COMPOSITE_POV_ELIGIBLE"}}, "required": ["pov_eligibility"]},
+      "then": {
+        "properties": {
+          "protection_class": {"const": "COMPOSITE_REQUIRED"},
+          "subject_handling": {"properties": {"composite_required": {"const": true}}, "required": ["composite_required"]},
+          "review": {
+            "properties": {"chronology_reviewed": {"const": true}, "survivor_protection_reviewed": {"const": true}},
+            "required": ["chronology_reviewed", "survivor_protection_reviewed"]
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"pov_eligibility": {"const": "ADULT_CONTINUATION_ELIGIBLE"}}, "required": ["pov_eligibility"]},
+      "then": {
+        "properties": {
+          "subject_handling": {"properties": {"age_band_at_event": {"const": "ADULT"}}, "required": ["age_band_at_event"]},
+          "review": {
+            "properties": {"chronology_reviewed": {"const": true}, "survivor_protection_reviewed": {"const": true}},
+            "required": ["chronology_reviewed", "survivor_protection_reviewed"]
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
