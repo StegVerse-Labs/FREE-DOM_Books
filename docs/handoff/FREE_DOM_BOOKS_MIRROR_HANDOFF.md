@@ -188,3 +188,7 @@ The originating session is archive-safe when:
 4. continuation does not require chat history.
 
 All four conditions are satisfied by this handoff, inventory, task registry, machine handoff, released claim record, and Issue `#1`.
+
+## Protected Sandbox continuation — Option 3
+
+The principal authorized separation of approved public infrastructure from unpublished and sensitive material on 2026-11-26. The existing coordination request is [Issue #1, comment 7210724771](https://github.com/StegVerse-Labs/FREE-DOM_Books/issues/1#issuecomment-7210724771). A private owner-only custody destination was created and its ACL read back; the protected deposit and digest receipts remain outstanding. Do not treat folder creation as migration or admission. The canonical owner must verify deposits before removing public copies, assess historical refs/forks/releases/artifacts, and verify named reviewer access and download restrictions. FDB-008 requires the survivor-source boundary, chronology schema and validation report; no survivor-derived factual drafting or publication is authorized by this note. Gate A requires protected admission and independent review; Gate B requires organization Registry reconciliation before integration. No new claim or execution authority is asserted. Private custody references remain in the Ecosystem KV.
