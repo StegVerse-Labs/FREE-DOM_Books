@@ -25,9 +25,9 @@ Authority: `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`
 | Chapter | Repository path / working title | Current status | Required action |
 |---|---|---|---|
 | Prologue | What Follows You Home | NONCANONICAL_DRAFT | Review I-35 details; remove invented sensory specifics unless remembered or documented. |
-| 01 | `book_01_GhostPAT/manuscript/ch01_The_Key_That_Wouldn’t_Die.md` — The Night the Key Wouldn’t Die | FACTUAL_REVIEW_REQUIRED | Apply `research/chapter_01_fact_audit.md`; verify logs, routes, root cause, chronology, setting, symptoms, and dialogue. Observed blob SHA: `7886ae194bac2f3d01f6941dead31159d902e6a6`. |
-| 02 | `book_01_GhostPAT/manuscript/ch02_The_First_Ghost.md` — The First Ghost | FACTUAL_REVIEW_REQUIRED | Reconcile VA role, veteran-call exposure, workstation chronology, and all causal implications. Observed blob SHA: `bbdde56482dd33ec6981b66fc814e52c8ce74bf3`. |
-| 03 | `book_01_GhostPAT/manuscript/ch03_The_Call_I_Still_Hear.md` — The Call I Still Hear | COMPOSITE_REVIEW_REQUIRED | Classify caller identity, family details, payment timeline, quoted dialogue, and outcome. Observed blob SHA: `c08f5f9a455fb103ba965bfb05b615c8cc44c45b`. |
+| 01 | `book_01_GhostPAT/manuscript/ch01_The_Key_That_Wouldn’t_Die.md` — The Night the Key Wouldn’t Die | MISSING_FROM_REPOSITORY | Held in private escrow under Option 3 (2026-11-27): FDB-CANON-001 protected escrow custody (Ecosystem KV), custody chain anchor ca01d3109e05ae024352d238b7f04fa184aa1b2ab06bd826086feb252b185068. Absent from the public repository by design; return and publication are the author's acts alone. Observed blob SHA at escrow: `7886ae194bac2f3d01f6941dead31159d902e6a6`. |
+| 02 | `book_01_GhostPAT/manuscript/ch02_The_First_Ghost.md` — The First Ghost | MISSING_FROM_REPOSITORY | Held in private escrow under Option 3 (2026-11-27): FDB-CANON-001 protected escrow custody (Ecosystem KV), custody chain anchor ca01d3109e05ae024352d238b7f04fa184aa1b2ab06bd826086feb252b185068. Absent from the public repository by design; return and publication are the author's acts alone. Observed blob SHA at escrow: `bbdde56482dd33ec6981b66fc814e52c8ce74bf3`. |
+| 03 | `book_01_GhostPAT/manuscript/ch03_The_Call_I_Still_Hear.md` — The Call I Still Hear | MISSING_FROM_REPOSITORY | Held in private escrow under Option 3 (2026-11-27): FDB-CANON-001 protected escrow custody (Ecosystem KV), custody chain anchor ca01d3109e05ae024352d238b7f04fa184aa1b2ab06bd826086feb252b185068. Absent from the public repository by design; return and publication are the author's acts alone. Observed blob SHA at escrow: `c08f5f9a455fb103ba965bfb05b615c8cc44c45b`. |
 | 04 | The Ledger / alternate title unresolved | UNRESOLVED_ORDER | Verify repository path; remove invented meetings, dialogue, and unsupported policy specifics. |
 | 05 | When the News Broke | FACTUAL_REVIEW_REQUIRED | Verify DOJ event, date, amounts, roles, and what Rigel actually saw or knew at the time. |
 | 06 | The Whisper Network | NONCANONICAL_DRAFT | Treat rumors and credential behavior as unverified until sourced. |
@@ -47,7 +47,7 @@ Authority: `docs/handoff/FREE_DOM_BOOKS_MIRROR_HANDOFF.md`
 
 ## Verified build anchor
 
-`book_01_GhostPAT/manuscript/book_01_master.md` exists with observed blob SHA `9958e4718a7ba0e14f944dc716c0aac89a5196cc`. It lists Chapters 1-18 and is consumed by `.github/workflows/build_book.yml`.
+`book_01_GhostPAT/manuscript/book_01_master.md` was observed with blob SHA `9958e4718a7ba0e14f944dc716c0aac89a5196cc`. It lists Chapters 1-18 and was consumed by `.github/workflows/build_book.yml`. On 2026-11-27 the master and all chapter manuscripts moved to private escrow under Option 3 (see the chapter rows above); the public repository no longer carries them, by design.
 
 The master file and beta-reader build are **not evidence of canon approval**. They expose drafts for reading and must not override this register.
 

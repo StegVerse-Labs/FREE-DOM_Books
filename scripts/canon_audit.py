@@ -84,7 +84,13 @@ def chapter_number(path: Path) -> str | None:
 
 def discover_chapters(directory: Path) -> list[Path]:
     if not directory.is_dir():
-        raise FileNotFoundError(f"manuscript directory not found: {directory}")
+        # The manuscript directory may be absent by design (e.g. the
+        # manuscripts are held in escrow custody outside the public
+        # repository). That is a reportable state, not an error: every
+        # registered chapter is then reported missing below, and a
+        # chapter registered as MISSING_FROM_REPOSITORY is in its
+        # expected state.
+        return []
     return sorted(
         path for path in directory.glob("ch*.md") if chapter_number(path) is not None
     )
@@ -130,7 +136,8 @@ def build_report(
     for number, entry in sorted(indexed.items()):
         if number not in discovered_numbers:
             missing_registered.append(entry)
-            strict_failure = True
+            if entry.status != "MISSING_FROM_REPOSITORY":
+                strict_failure = True
 
     report_lines = [
         "# Canon Audit Report",

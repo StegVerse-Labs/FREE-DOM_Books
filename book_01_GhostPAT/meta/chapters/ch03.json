@@ -4,7 +4,7 @@
   "chapter_number": "03",
   "title": "The Call I Still Hear",
   "manuscript_path": "book_01_GhostPAT/manuscript/ch03_The_Call_I_Still_Hear.md",
-  "canon_status": "COMPOSITE_REVIEW_REQUIRED",
+  "canon_status": "MISSING_FROM_REPOSITORY",
   "chronology": {
     "era": "VA_ERA",
     "not_before": null,
@@ -32,7 +32,8 @@
   "review_notes": [
     "Do not treat caller age, family circumstances, duration, or exact words as verified without source support.",
     "Preserve the human impact through transparent paraphrase or registered composite construction.",
-    "Assess identifiability and avoid implying a traceable real case."
+    "Assess identifiability and avoid implying a traceable real case.",
+    "Manuscript held in private escrow under Option 3 (2026-11-27): FDB-CANON-001 protected escrow custody (Ecosystem KV folder 1M7v7o80t96oXWJQp_8D2lq2J8Aqd6gke), custody chain anchor ca01d3109e05ae024352d238b7f04fa184aa1b2ab06bd826086feb252b185068. Absent from the public repository by design; publication remains the author's act alone."
   ],
-  "last_reviewed_commit": null
+  "last_reviewed_commit": "a82cd4734b7fb27f1be097169c6063ad38619766"
 }
